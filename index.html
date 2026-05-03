@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>xos.name — Claim Your Sovereign Identity</title>
+  <meta name="description" content="Register your verified identity across every app, every agent, every platform. yours.hum — forever." />
+  <meta property="og:title" content="xos.name — Your Name. Every Agent. Forever." />
+  <meta property="og:description" content="Claim a sovereign verified identity across every app, every agent, every platform." />
+  <meta property="og:image" content="https://xos.name/og.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', '"Fira Code"', '"Cascadia Code"', 'monospace'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
+            fadeInUp: { from: { opacity: 0, transform: 'translateY(24px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { background: #09090b; color: #fafafa; }
+    .gradient-text {
+      background: linear-gradient(135deg, #a78bfa, #818cf8, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .glow-violet { box-shadow: 0 0 80px -10px rgba(139, 92, 246, 0.3); }
+    .glow-sm { box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
+    .border-gradient {
+      background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(56,189,248,0.1));
+      padding: 1px;
+      border-radius: 16px;
+    }
+    .handle-preview {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    .platform-pill {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+    .preview-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .preview-box:focus-within {
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+    select option { background: #18181b; color: #fafafa; }
+    .ns-hum  { color: #c4b5fd; }
+    .ns-ai   { color: #7dd3fc; }
+    .ns-team { color: #6ee7b7; }
+    .ns-org  { color: #fdba74; }
+    .handle-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      transition: color 0.15s ease;
+      min-height: 2.75rem;
+    }
+    @media (min-width: 640px) {
+      .handle-display { font-size: 3rem; }
+    }
+    .card-glow-violet { box-shadow: 0 0 0 1px rgba(139,92,246,0.2), 0 4px 24px rgba(139,92,246,0.07); }
+    .card-glow-sky    { box-shadow: 0 0 0 1px rgba(56,189,248,0.2),  0 4px 24px rgba(56,189,248,0.07);  }
+    .card-glow-emerald{ box-shadow: 0 0 0 1px rgba(52,211,153,0.2), 0 4px 24px rgba(52,211,153,0.07);}
+    .card-glow-orange { box-shadow: 0 0 0 1px rgba(251,146,60,0.2),  0 4px 24px rgba(251,146,60,0.07);  }
+    input[type="text"] {
+      background: transparent;
+      outline: none;
+      color: #fafafa;
+    }
+    input[type="text"]::placeholder { color: #52525b; }
+    select {
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-zinc-950/80 backdrop-blur-xl">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white">X</div>
+        <span class="font-bold text-zinc-100 tracking-tight handle-preview">xos.name</span>
+        <span class="text-xs font-bold text-zinc-500 tracking-widest uppercase">IDENTITY</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://exponentialos.io" class="text-xs text-zinc-600 hover:text-zinc-400 transition-colors hidden sm:block">Exponential OS →</a>
+        <button
+          data-tally-open="Y5Vra6"
+          data-tally-emoji-text="✦"
+          data-tally-emoji-animation="wave"
+          class="px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-sm font-semibold text-white transition-colors cursor-pointer"
+        >
+          Register →
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative pt-32 pb-16 px-6 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(139,92,246,0.15),transparent)]"></div>
+
+    <div class="relative max-w-4xl mx-auto text-center">
+      <!-- Status pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] text-xs text-zinc-400 font-medium mb-8 animate-fade-in">
+        <span class="w-1.5 h-1.5 rounded-full bg-violet-400 shadow-sm shadow-violet-400/50 animate-pulse-slow"></span>
+        Identity registry — claiming names now
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] mb-6 animate-fade-in-up">
+        Your name.<br />
+        <span class="gradient-text">Every agent. Forever.</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-12 animate-fade-in-up" style="animation-delay:0.1s">
+        Claim a sovereign, verified identity across every app, every agent, every platform.
+        One handle. Yours permanently.
+      </p>
+    </div>
+  </section>
+
+  <!-- Handle Preview Widget — the centerpiece -->
+  <section class="py-4 px-6">
+    <div class="max-w-2xl mx-auto animate-fade-in-up" style="animation-delay:0.2s">
+      <div class="border-gradient">
+        <div class="rounded-2xl bg-zinc-950 p-8">
+          <p class="text-xs font-bold tracking-widest text-violet-400 uppercase mb-8 text-center">Claim your handle</p>
+
+          <!-- Input row -->
+          <div class="preview-box p-4 mb-6">
+            <div class="flex items-center gap-3">
+              <input
+                id="handle-input"
+                type="text"
+                placeholder="yourname"
+                maxlength="32"
+                class="flex-1 text-lg font-medium handle-preview"
+                oninput="updatePreview()"
+              />
+              <div class="flex items-center gap-1 text-zinc-600 font-bold text-lg handle-preview">.</div>
+              <select
+                id="ns-select"
+                class="text-lg font-semibold handle-preview text-violet-300 border-0 appearance-none pr-2"
+                onchange="updatePreview()"
+              >
+                <option value="hum">hum</option>
+                <option value="ai">ai</option>
+                <option value="team">team</option>
+                <option value="org">org</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Live preview -->
+          <div class="text-center mb-8">
+            <p class="text-xs text-zinc-600 uppercase tracking-wider mb-3">Your handle looks like</p>
+            <div id="handle-display" class="handle-display ns-hum">anand.hum</div>
+            <p id="handle-desc" class="text-xs text-zinc-500 mt-2">Verified human · Portable across every platform</p>
+          </div>
+
+          <!-- CTA -->
+          <button
+            data-tally-open="Y5Vra6"
+            data-tally-emoji-text="✦"
+            data-tally-emoji-animation="wave"
+            class="w-full px-6 py-4 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all hover:scale-[1.01] glow-violet cursor-pointer"
+          >
+            Claim it →
+          </button>
+          <p class="text-xs text-zinc-700 text-center mt-3">Early access — handles reserved in order of registration</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Namespace cards -->
+  <section class="py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-xs font-bold tracking-widest text-zinc-500 uppercase text-center mb-4">The namespaces</p>
+      <h2 class="text-3xl sm:text-4xl font-black text-center mb-4 tracking-tight">
+        One registry.<br /><span class="gradient-text">Humans and agents together.</span>
+      </h2>
+      <p class="text-zinc-500 text-center mb-12 max-w-xl mx-auto text-sm">
+        The DNS of the agentic internet. Every entity — person, AI agent, team, organization — gets a portable verified address.
+      </p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- .hum -->
+        <div class="rounded-xl bg-zinc-950 p-6 card-glow-violet cursor-pointer" onclick="setNamespace('hum')">
+          <p class="handle-preview text-3xl font-black text-violet-300 mb-3">.hum</p>
+          <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Humans</p>
+          <p class="text-xs text-zinc-600 leading-relaxed mb-4">Government-verified identity. Sovereign and portable.</p>
+          <div class="space-y-1">
+            <p class="handle-preview text-xs text-violet-400">anand.hum</p>
+            <p class="handle-preview text-xs text-zinc-600">sarah.hum</p>
+          </div>
+          <div class="mt-4 flex items-center gap-1.5">
+            <div class="w-4 h-4 rounded-full bg-violet-500/20 border border-violet-500/30 flex items-center justify-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-violet-400"></div>
+            </div>
+            <span class="text-xs text-zinc-600">via id.me · Login.gov</span>
+          </div>
+        </div>
+
+        <!-- .ai -->
+        <div class="rounded-xl bg-zinc-950 p-6 card-glow-sky cursor-pointer" onclick="setNamespace('ai')">
+          <p class="handle-preview text-3xl font-black text-sky-300 mb-3">.ai</p>
+          <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">AI Agents</p>
+          <p class="text-xs text-zinc-600 leading-relaxed mb-4">Every agent gets a verified, callable address.</p>
+          <div class="space-y-1">
+            <p class="handle-preview text-xs text-sky-400">assistant.ai</p>
+            <p class="handle-preview text-xs text-zinc-600">coder.ai</p>
+          </div>
+          <div class="mt-4 flex items-center gap-1.5">
+            <div class="w-4 h-4 rounded-full bg-sky-500/20 border border-sky-500/30 flex items-center justify-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-sky-400"></div>
+            </div>
+            <span class="text-xs text-zinc-600">API key · agent manifest</span>
+          </div>
+        </div>
+
+        <!-- .team -->
+        <div class="rounded-xl bg-zinc-950 p-6 card-glow-emerald cursor-pointer" onclick="setNamespace('team')">
+          <p class="handle-preview text-3xl font-black text-emerald-300 mb-3">.team</p>
+          <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Teams</p>
+          <p class="text-xs text-zinc-600 leading-relaxed mb-4">Mixed human-agent crews, coordinated.</p>
+          <div class="space-y-1">
+            <p class="handle-preview text-xs text-emerald-400">buildops.team</p>
+            <p class="handle-preview text-xs text-zinc-600">design.team</p>
+          </div>
+          <div class="mt-4 flex items-center gap-1.5">
+            <div class="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+            </div>
+            <span class="text-xs text-zinc-600">org SSO · team manifest</span>
+          </div>
+        </div>
+
+        <!-- .org -->
+        <div class="rounded-xl bg-zinc-950 p-6 card-glow-orange cursor-pointer" onclick="setNamespace('org')">
+          <p class="handle-preview text-3xl font-black text-orange-300 mb-3">.org</p>
+          <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Organizations</p>
+          <p class="text-xs text-zinc-600 leading-relaxed mb-4">Companies and communities on the OS.</p>
+          <div class="space-y-1">
+            <p class="handle-preview text-xs text-orange-400">ai-fund.org</p>
+            <p class="handle-preview text-xs text-zinc-600">builders.org</p>
+          </div>
+          <div class="mt-4 flex items-center gap-1.5">
+            <div class="w-4 h-4 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
+            </div>
+            <span class="text-xs text-zinc-600">EIN · non-profit status</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust / Verification section -->
+  <section class="py-20 px-6 bg-zinc-900/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-xs font-bold tracking-widest text-zinc-500 uppercase mb-4">Backed by government-grade identity</p>
+        <h2 class="text-3xl sm:text-4xl font-black mb-4 tracking-tight">
+          <span class="gradient-text">anand.hum</span> means<br />Anand Vallamsetla. Verified.
+        </h2>
+        <p class="text-zinc-400 max-w-xl mx-auto">
+          Not just a username. A handle backed by the same identity layer used by the VA, IRS, and Social Security Administration.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="rounded-2xl bg-zinc-950 border border-zinc-800 p-6">
+          <div class="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+          </div>
+          <h3 class="font-bold text-zinc-100 mb-2">id.me Verified</h3>
+          <p class="text-sm text-zinc-500 leading-relaxed">Government-grade identity verification. Used by 100M+ Americans to access federal services.</p>
+        </div>
+
+        <div class="rounded-2xl bg-zinc-950 border border-zinc-800 p-6">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" /></svg>
+          </div>
+          <h3 class="font-bold text-zinc-100 mb-2">Login.gov Support</h3>
+          <p class="text-sm text-zinc-500 leading-relaxed">Alternative SSO via Login.gov for privacy-first users who want a government-backed option without private intermediaries.</p>
+        </div>
+
+        <div class="rounded-2xl bg-zinc-950 border border-zinc-800 p-6">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+          </div>
+          <h3 class="font-bold text-zinc-100 mb-2">Sovereign by Design</h3>
+          <p class="text-sm text-zinc-500 leading-relaxed">Your handle is yours. Not tied to any app, platform, or employer. It travels with you across every agent, every device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it connects to Exponential OS -->
+  <section class="py-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="border-gradient">
+        <div class="rounded-2xl bg-zinc-950 p-8 sm:p-10">
+          <p class="text-xs font-bold tracking-widest text-violet-400 uppercase mb-6 text-center">The bigger picture</p>
+          <div class="grid sm:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 class="text-2xl sm:text-3xl font-black mb-4 tracking-tight leading-tight">
+                Your identity lives at the core of <span class="gradient-text">Exponential OS</span>
+              </h2>
+              <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                xos.name is the identity layer for Exponential OS — the operating system for agents and humans. Your handle isn't just a name. It's the key to your agents, your skills, and your presence across every device and platform.
+              </p>
+              <a
+                href="https://exponentialos.io"
+                class="inline-flex items-center gap-2 text-sm font-semibold text-violet-300 hover:text-violet-200 transition-colors"
+              >
+                Learn about Exponential OS
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </a>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-violet-500/5 border border-violet-500/10">
+                <div class="w-8 h-8 rounded-lg bg-violet-500/15 flex items-center justify-center text-violet-400 text-xs font-black flex-shrink-0">①</div>
+                <div>
+                  <p class="text-sm font-semibold text-zinc-200">Register at xos.name</p>
+                  <p class="text-xs text-zinc-600">Claim your sovereign handle</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-sky-500/5 border border-sky-500/10">
+                <div class="w-8 h-8 rounded-lg bg-sky-500/15 flex items-center justify-center text-sky-400 text-xs font-black flex-shrink-0">②</div>
+                <div>
+                  <p class="text-sm font-semibold text-zinc-200">Deploy agents to your handle</p>
+                  <p class="text-xs text-zinc-600">Skills, assistants, automations</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400 text-xs font-black flex-shrink-0">③</div>
+                <div>
+                  <p class="text-sm font-semibold text-zinc-200">Run on every OS</p>
+                  <p class="text-xs text-zinc-600">iPhone · Android · Mac · Windows</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist CTA -->
+  <section id="waitlist" class="py-24 px-6 bg-zinc-900/20">
+    <div class="max-w-xl mx-auto text-center">
+      <p class="text-xs font-bold tracking-widest text-violet-400 uppercase mb-4">Early access</p>
+      <h2 class="text-3xl sm:text-4xl font-black mb-4 tracking-tight">
+        Handles are being reserved.<br /><span class="gradient-text">Claim yours first.</span>
+      </h2>
+      <p class="text-zinc-400 mb-8 max-w-sm mx-auto">
+        Early members choose their handle before the public launch. The best names go first.
+      </p>
+
+      <button
+        data-tally-open="Y5Vra6"
+        data-tally-emoji-text="✦"
+        data-tally-emoji-animation="wave"
+        class="px-8 py-4 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all hover:scale-[1.02] glow-violet cursor-pointer"
+      >
+        Reserve your handle →
+      </button>
+      <p class="text-xs text-zinc-600 mt-4">No spam. Unsubscribe any time.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.04] py-8 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded-md bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-[10px] font-black text-white">X</div>
+        <span class="handle-preview text-sm text-zinc-600">xos.name</span>
+      </div>
+      <p class="text-xs text-zinc-700">
+        © 2026 xos.name · Powered by <a href="https://exponentialos.io" class="hover:text-zinc-500 transition-colors">Exponential OS</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Tally embed -->
+  <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+
+  <script>
+    const nsColors = {
+      hum:  { cls: 'ns-hum',  desc: 'Verified human · Portable across every platform' },
+      ai:   { cls: 'ns-ai',   desc: 'AI agent or product · Callable address for automation' },
+      team: { cls: 'ns-team', desc: 'Mixed human-agent team · Coordinated workspace' },
+      org:  { cls: 'ns-org',  desc: 'Community or organization · Shared identity layer' },
+    };
+
+    function updatePreview() {
+      const input = document.getElementById('handle-input');
+      const select = document.getElementById('ns-select');
+      const display = document.getElementById('handle-display');
+      const desc = document.getElementById('handle-desc');
+
+      const name = input.value.replace(/[^a-zA-Z0-9\-_]/g, '').toLowerCase() || 'yourname';
+      const ns = select.value;
+      const { cls, desc: nsDesc } = nsColors[ns];
+
+      display.textContent = `${name}.${ns}`;
+      display.className = `handle-display ${cls}`;
+      desc.textContent = nsDesc;
+    }
+
+    function setNamespace(ns) {
+      document.getElementById('ns-select').value = ns;
+      updatePreview();
+      document.getElementById('handle-input').focus();
+    }
+
+    // Initialize
+    updatePreview();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
